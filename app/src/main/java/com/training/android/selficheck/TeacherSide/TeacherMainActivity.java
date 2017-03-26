@@ -1,14 +1,13 @@
-package com.training.android.selficheck;
+package com.training.android.selficheck.TeacherSide;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,16 +15,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.training.android.selficheck.Adapters.SubjectsAdapter;
+import com.training.android.selficheck.Adapters.SubjectsTeacherAdapter;
 import com.training.android.selficheck.Datas.Subj_StudentsData;
 import com.training.android.selficheck.Datas.SubjectsData;
-import com.training.android.selficheck.TeacherSide.TeacherMainActivity;
+import com.training.android.selficheck.R;
+import com.training.android.selficheck.StudentMenu;
+import com.training.android.selficheck.Subject_details;
 
 import java.util.ArrayList;
 
-public class StudentMenu extends AppCompatActivity {
+public class TeacherMainActivity extends AppCompatActivity {
 
     RecyclerView mrvSubjList;
-    private SubjectsAdapter mAdapter;
+    private SubjectsTeacherAdapter mAdapter;
     private ArrayList<SubjectsData> mData = new ArrayList<>();
     private ArrayList<Subj_StudentsData> mSubjStudents = new ArrayList<>();
     private FirebaseDatabase mFirebaseDatabase;
@@ -34,9 +36,9 @@ public class StudentMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_menu);
+        setContentView(R.layout.activity_teacher_main);
 
-        mrvSubjList = (RecyclerView) findViewById(R.id.rvSubjList);
+        mrvSubjList = (RecyclerView) findViewById(R.id.rvTeacherSubj);
 
         //Firebase DATABASE
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -66,7 +68,7 @@ public class StudentMenu extends AppCompatActivity {
                             }
 
                         }
-                        mAdapter = new SubjectsAdapter(getApplicationContext(), mData);
+                        mAdapter = new SubjectsTeacherAdapter(getApplicationContext(), mData);
                         mrvSubjList.setAdapter(mAdapter);
                         mrvSubjList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     }
@@ -101,14 +103,12 @@ public class StudentMenu extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.add_subjects:
-                Intent i = new Intent(StudentMenu.this, TeacherMainActivity.class);
+                Intent i = new Intent(TeacherMainActivity.this, Subject_details.class);
                 startActivity(i);
                 break;
-
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }

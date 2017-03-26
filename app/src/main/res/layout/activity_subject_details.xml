@@ -53,11 +53,9 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:text="Date:"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSubjTeacher" />
+        tools:layout_editor_absoluteY="109dp"
+        tools:layout_editor_absoluteX="8dp" />
 
     <Button
         android:id="@+id/btnAttendance"
@@ -82,7 +80,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:text="Current Time:"
         app:layout_constraintLeft_toLeftOf="parent"
