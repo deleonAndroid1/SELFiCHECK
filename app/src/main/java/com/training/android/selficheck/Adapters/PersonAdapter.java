@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.ValueEventListener;
 import com.training.android.selficheck.Datas.PersonData;
 import com.training.android.selficheck.R;
 import com.training.android.selficheck.Subject_details;
@@ -35,10 +36,10 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
     public PersonAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
 
-        final View SubjectListsLayout = LayoutInflater.from(mContext)
-                .inflate(R.layout.student_subject_layout, null);
+        final View StudentListLayout = LayoutInflater.from(mContext)
+                .inflate(R.layout.teacher_studentslist_layout, null);
 
-        holder = new PersonAdapter.ViewHolder(SubjectListsLayout);
+        holder = new PersonAdapter.ViewHolder(StudentListLayout);
 
         return holder;
     }
@@ -49,20 +50,10 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
         final PersonData personData = mPerson.get(position);
 
         if (personData != null){
+            holder.mtvId.setText(personData.getId());
             holder.mtvName.setText(personData.getName());
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(mContext, Subject_details.class);
-                i.putExtra("PersonName", personData.getName());
-                i.putExtra("PersonId", personData.getId());
-                i.putExtra("PersonEmail", personData.getEmail());
-                i.putExtra("PersonRole", personData.getRole());
-                mContext.startActivity(i);
-            }
-        });
     }
 
     @Override
@@ -77,13 +68,14 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mtvName;
+        TextView mtvName, mtvId;
         ImageView mIvPicture;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             mtvName = (TextView) itemView.findViewById(R.id.tvName);
+            mtvId = (TextView) itemView.findViewById(R.id.tvId);
             mIvPicture = (ImageView) itemView.findViewById(R.id.ivPicture);
 
         }
