@@ -7,11 +7,15 @@ import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.training.android.selficheck.Adapters.PersonAdapter;
+import com.training.android.selficheck.Adapters.SubjectsAdapter;
 import com.training.android.selficheck.Datas.AttendanceData;
 import com.training.android.selficheck.Datas.PersonData;
 import com.training.android.selficheck.Datas.StudentsAttendanceClass;
@@ -51,6 +57,8 @@ public class TeacherSubjectActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mSubjStudReference, mAttendanceReference, mCheckAttendanceReference, SampleReference;
     private Button mAddAttendance;
+    private RecyclerView mrvStudentList;
+    private PersonAdapter mPersonAdapter;
     private TextView mTvSubjName, mTvSubjSched, mTvDate, mTvCurrentTime;
     private String uri;
     private String time = df.format(Calendar.getInstance().getTime()), key;
@@ -62,6 +70,7 @@ public class TeacherSubjectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_teacher_subject);
 
         //initializations
+        mrvStudentList = (RecyclerView) findViewById(R.id.rvStudentList);
         mTvSubjName = (TextView) findViewById(R.id.tvCourseName);
         mTvSubjSched = (TextView) findViewById(R.id.tvSched);
         mTvDate = (TextView) findViewById(R.id.tvDate);
@@ -154,6 +163,9 @@ public class TeacherSubjectActivity extends AppCompatActivity {
                 PersonData personData = postSnapshot.getValue(PersonData.class);
                 personArrayList.add(personData);
             }
+                mPersonAdapter = new PersonAdapter(getApplicationContext(), personArrayList);
+                mrvStudentList.setAdapter(mPersonAdapter);
+                mrvStudentList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         }
 
         @Override
