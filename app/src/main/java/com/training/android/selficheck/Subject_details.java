@@ -201,6 +201,8 @@ public class Subject_details extends AppCompatActivity {
         });
     }
 
+
+
     public void pushAttendance() {
 
         StudentsAttendanceClass sac = new StudentsAttendanceClass("2014006791", time, uri);

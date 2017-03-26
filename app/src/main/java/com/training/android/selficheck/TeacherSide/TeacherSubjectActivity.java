@@ -25,6 +25,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.training.android.selficheck.Datas.AttendanceData;
+import com.training.android.selficheck.Datas.PersonData;
 import com.training.android.selficheck.Datas.StudentsAttendanceClass;
 import com.training.android.selficheck.Datas.Subj_StudentsData;
 import com.training.android.selficheck.Fragments.AddAttendanceFragment;
@@ -34,6 +35,7 @@ import com.training.android.selficheck.Subject_details;
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -41,12 +43,13 @@ import static com.training.android.selficheck.R.id.btnAttendance;
 
 public class TeacherSubjectActivity extends AppCompatActivity {
 
+    ArrayList<PersonData> personArrayList = new ArrayList<>();
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     DateFormat df = new SimpleDateFormat("HH:mm");
     DateFormat df1 = new SimpleDateFormat("MM-dd-yyyy");
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mSubjStudReference, mAttendanceReference, mTakeAttendanceReference, SampleReference;
+    private DatabaseReference mSubjStudReference, mAttendanceReference, mCheckAttendanceReference, SampleReference;
     private Button mAddAttendance;
     private TextView mTvSubjName, mTvSubjSched, mTvDate, mTvCurrentTime;
     private String uri;
@@ -105,6 +108,7 @@ public class TeacherSubjectActivity extends AppCompatActivity {
 
                     if (subj_studentsData.getCourseCode().equals(key)) {
                         mAttendanceReference = mSubjStudReference.child(postSnapshot.getKey()).child("Attendance");
+                        getAttendance();
                     }
                 }
             }
@@ -114,6 +118,49 @@ public class TeacherSubjectActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    public void getAttendance() {
+
+        mAttendanceReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    AttendanceData attendanceData = postSnapshot.getValue(AttendanceData.class);
+
+                    if (attendanceData.getDate().equals(date)) {
+                        mCheckAttendanceReference = mAttendanceReference.child(date).child("StudentsAttendance");
+                        getStudents();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getStudents() {
+
+        mCheckAttendanceReference.addValueEventListener(new ValueEventListener() {
+            @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                PersonData personData = postSnapshot.getValue(PersonData.class);
+                personArrayList.add(personData);
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    });
 
     }
 
