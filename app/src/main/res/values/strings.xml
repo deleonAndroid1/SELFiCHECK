@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">SELFiCHECK</string>
     <string name="add">Add Subject</string>
+    <string name="attendance">Add Attendance</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 </resources>
