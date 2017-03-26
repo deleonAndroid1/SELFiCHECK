@@ -1,6 +1,7 @@
 package com.training.android.selficheck;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,15 +39,16 @@ public class Subject_details extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     DateFormat df = new SimpleDateFormat("HH:mm");
     DateFormat df1 = new SimpleDateFormat("MM-dd-yyyy");
+    ProgressDialog pd;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mSubjStudReference, mAttendanceReference, mTakeAttendanceReference, SampleReference;
-    private Button mbtnTakeAttendance;
+    private Button mbtnTakeAttendance, mbtnCheckPassword;
     private TextView mTvSubjName, mTvSubjSched, mTvDate, mTvCurrentTime;
+    private EditText mEtPassword;
     private String uri;
     private String time = df.format(Calendar.getInstance().getTime()), key;
     private String date = df1.format(Calendar.getInstance().getTime()), AttendancePassword;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +57,22 @@ public class Subject_details extends AppCompatActivity {
 
         //initializations
         mbtnTakeAttendance = (Button) findViewById(btnAttendance);
+        mbtnCheckPassword = (Button) findViewById(R.id.btnCheckPassword);
         mTvSubjName = (TextView) findViewById(R.id.tvSubjNameDetail);
         mTvSubjSched = (TextView) findViewById(R.id.tvSubjSchedDetail);
         mTvDate = (TextView) findViewById(R.id.tvDate);
         mTvCurrentTime = (TextView) findViewById(R.id.tvCurrentTIme);
+        mEtPassword = (EditText) findViewById(R.id.etPassword);
 
-        //Database
+
         //Database
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mSubjStudReference = mFirebaseDatabase.getReference().child("Subj_students");
-        SampleReference = mFirebaseDatabase.getReference().child("Sample");
+
 
         //Call Attendance function to access Database
         getSubj();
+
 
         //Set Datas
         Intent i = getIntent();
@@ -77,14 +83,32 @@ public class Subject_details extends AppCompatActivity {
         mTvDate.setText(date);
         mTvCurrentTime.setText(time);
 
+
         mbtnTakeAttendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getAttendance();
+
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                }
+            }
+        });
+
+        mbtnCheckPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String pass = String.valueOf(mEtPassword.getText());
+
+                if (pass.equals(AttendancePassword)) {
+                    mbtnTakeAttendance.setEnabled(true);
+                    mEtPassword.setText("");
+                    Toast.makeText(Subject_details.this, "Password Correct", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Subject_details.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                    mEtPassword.setText("");
                 }
             }
         });
@@ -102,6 +126,11 @@ public class Subject_details extends AppCompatActivity {
                 String path = "Attendance/" + UUID.randomUUID() + ".png";
                 StorageReference attendancReference = storage.getReference(path);
 
+
+                pd = new ProgressDialog(this);
+                pd.setMessage("Please wait...");
+                pd.show();
+
                 UploadTask uploadTask = attendancReference.putBytes(byteArray);
                 uploadTask.addOnSuccessListener(Subject_details.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -111,7 +140,7 @@ public class Subject_details extends AppCompatActivity {
                         uri = String.valueOf(taskSnapshot.getDownloadUrl());
 
                         pushAttendance();
-
+                        pd.dismiss();
                     }
                 });
 
@@ -133,6 +162,7 @@ public class Subject_details extends AppCompatActivity {
 
                     if (subj_studentsData.getCourseCode().equals(key)) {
                         mAttendanceReference = mSubjStudReference.child(postSnapshot.getKey()).child("Attendance");
+                        getAttendance();
                     }
                 }
             }
@@ -159,7 +189,6 @@ public class Subject_details extends AppCompatActivity {
                     if (attendanceData.getDate().equals(date)) {
                         AttendancePassword = attendanceData.getAttendancePassword();
                         mTakeAttendanceReference = mAttendanceReference.child(date).child("StudentsAttendance");
-
                     }
                 }
 

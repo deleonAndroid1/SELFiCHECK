@@ -32,10 +32,10 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
 
-        final View apartmentsLayout = LayoutInflater.from(mContext)
+        final View SubjectListsLayout = LayoutInflater.from(mContext)
                 .inflate(R.layout.student_subject_layout, null);
 
-        holder = new ViewHolder(apartmentsLayout);
+        holder = new ViewHolder(SubjectListsLayout);
 
         return holder;
     }
