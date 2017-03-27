@@ -113,7 +113,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/etCoursePassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -135,5 +135,5 @@
         android:text="Submit"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/etCoursePassword" />
 </android.support.constraint.ConstraintLayout>

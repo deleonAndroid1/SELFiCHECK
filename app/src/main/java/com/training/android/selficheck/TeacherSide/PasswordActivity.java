@@ -52,7 +52,7 @@ public class PasswordActivity extends AppCompatActivity {
         key = data.getString("CourseCode");
 
         mBtnConfirm = (Button) findViewById(R.id.btnConfirm);
-        mPassword = (EditText) findViewById(R.id.etPassword);
+        mPassword = (EditText) findViewById(R.id.etCoursePassword);
 
         mBtnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override

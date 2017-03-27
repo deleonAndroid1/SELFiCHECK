@@ -23,7 +23,8 @@
         <activity android:name=".Subject_details" />
         <activity android:name=".TeacherSide.TeacherMainActivity" />
         <activity android:name=".TeacherSide.TeacherSubjectActivity" />
-        <activity android:name=".TeacherSide.PasswordActivity"></activity>
+        <activity android:name=".TeacherSide.PasswordActivity" />
+        <activity android:name=".TeacherSide.AddSubjectActivity"></activity>
     </application>
 
 </manifest>

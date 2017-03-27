@@ -9,37 +9,24 @@ public class SubjectsData extends Subj_StudentsData {
     public SubjectsData() {
     }
 
-    public SubjectsData(String courseCode, String courseName, String courseSchedule, String courseRoom, String subjectPassword, long teacherID) {
-        CourseCode = courseCode;
-        CourseName = courseName;
-        CourseSchedule = courseSchedule;
-        CourseRoom = courseRoom;
-        SubjectPassword = subjectPassword;
-        TeacherID = teacherID;
+
+    public SubjectsData(String CourseCode, String CourseName, String CourseSchedule, String CourseRoom, String SubjectPassword, long TeacherID) {
+        this.CourseCode = CourseCode;
+        this.CourseName = CourseName;
+        this.CourseSchedule = CourseSchedule;
+        this.CourseRoom = CourseRoom;
+        this.SubjectPassword = SubjectPassword;
+        this.TeacherID = TeacherID;
     }
 
+    @Override
     public String getCourseCode() {
         return CourseCode;
     }
 
-    public String getSubjectPassword() {
-        return SubjectPassword;
-    }
-
-    public void setSubjectPassword(String subjectPassword) {
-        SubjectPassword = subjectPassword;
-    }
-
-    public long getTeacherID() {
-        return TeacherID;
-    }
-
-    public void setTeacherID(long teacherID) {
-        TeacherID = teacherID;
-    }
-
+    @Override
     public void setCourseCode(String courseCode) {
-        CourseCode = courseCode;
+        this.CourseCode = courseCode;
     }
 
     public String getCourseName() {
@@ -47,7 +34,7 @@ public class SubjectsData extends Subj_StudentsData {
     }
 
     public void setCourseName(String courseName) {
-        CourseName = courseName;
+        this.CourseName = courseName;
     }
 
     public String getCourseSchedule() {
@@ -55,7 +42,7 @@ public class SubjectsData extends Subj_StudentsData {
     }
 
     public void setCourseSchedule(String courseSchedule) {
-        CourseSchedule = courseSchedule;
+        this.CourseSchedule = courseSchedule;
     }
 
     public String getCourseRoom() {
@@ -63,8 +50,22 @@ public class SubjectsData extends Subj_StudentsData {
     }
 
     public void setCourseRoom(String courseRoom) {
-        CourseRoom = courseRoom;
+        this.CourseRoom = courseRoom;
     }
 
+    public String getSubjectPassword() {
+        return SubjectPassword;
+    }
 
+    public void setSubjectPassword(String subjectPassword) {
+        this.SubjectPassword = subjectPassword;
+    }
+
+    public long getTeacherID() {
+        return TeacherID;
+    }
+
+    public void setTeacherID(long teacherID) {
+        this.TeacherID = teacherID;
+    }
 }

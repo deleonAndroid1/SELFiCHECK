@@ -93,7 +93,7 @@ public class TeacherMainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.add_subject, menu);
+        inflater.inflate(R.menu.add_teacher_subject, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -102,8 +102,8 @@ public class TeacherMainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
 
-            case R.id.add_subjects:
-                Intent i = new Intent(TeacherMainActivity.this, Subject_details.class);
+            case R.id.add_subject_menu:
+                Intent i = new Intent(TeacherMainActivity.this, AddSubjectActivity.class);
                 startActivity(i);
                 break;
         }

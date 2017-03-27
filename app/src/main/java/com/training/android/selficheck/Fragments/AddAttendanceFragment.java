@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.EditText;
@@ -16,7 +15,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.training.android.selficheck.Datas.AttendanceData;
-import com.training.android.selficheck.Datas.StudentsAttendanceClass;
 import com.training.android.selficheck.Datas.Subj_StudentsData;
 import com.training.android.selficheck.R;
 
@@ -57,7 +55,7 @@ public class AddAttendanceFragment extends DialogFragment {
             .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int id) {
-            mPassword = (EditText) getView().findViewById(R.id.etPassword);
+            mPassword = (EditText) getView().findViewById(R.id.etCoursePassword);
             Toast.makeText(mPassword.getContext(), "asdfasdfaf", Toast.LENGTH_SHORT).show();
                         /*String password = String.valueOf(mPassword.getText());
                         pushPassword(password);*/

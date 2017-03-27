@@ -62,7 +62,7 @@ public class Subject_details extends AppCompatActivity {
         mTvSubjSched = (TextView) findViewById(R.id.tvSubjSchedDetail);
         mTvDate = (TextView) findViewById(R.id.tvDate);
         mTvCurrentTime = (TextView) findViewById(R.id.tvCurrentTIme);
-        mEtPassword = (EditText) findViewById(R.id.etPassword);
+        mEtPassword = (EditText) findViewById(R.id.etCoursePassword);
 
 
         //Database
